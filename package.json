@@ -22,8 +22,11 @@
     "@payloadcms/next": "3.69.0",
     "@payloadcms/richtext-lexical": "3.69.0",
     "@payloadcms/ui": "3.69.0",
+    "@radix-ui/react-label": "^2.1.8",
     "@radix-ui/react-scroll-area": "^1.2.10",
     "@radix-ui/react-slot": "^1.2.4",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
     "dotenv": "16.4.7",
     "framer-motion": "^12.23.26",
@@ -35,7 +38,8 @@
     "react-dom": "19.2.1",
     "sharp": "0.34.2",
     "tailwind-animate": "^0.2.10",
-    "tailwind-merge": "^3.4.0"
+    "tailwind-merge": "^3.4.0",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@playwright/test": "1.56.1",
