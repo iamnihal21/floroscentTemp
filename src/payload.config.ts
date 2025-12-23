@@ -17,6 +17,9 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    custom: {
+      css: path.resolve(dirname, './app/globals.css'),
+    },
   },
   collections: [Users, Media],
   editor: lexicalEditor(),

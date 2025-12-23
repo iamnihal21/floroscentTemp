@@ -14,10 +14,7 @@ export default function Page() {
       <ResultsSection />
       <TestimonialsSlider />
       <MapsSection />
-      <div className="bg-primary text-primary-foreground p-4">
-  FINAL COLOR TEST
-</div>
-
+      <div className="bg-red-500 text-white p-6">If this is red, Tailwind is compiling</div>
     </main>
   )
 }
