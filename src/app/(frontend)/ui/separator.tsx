@@ -5,7 +5,7 @@ import * as SeparatorPrimitive from "@radix-ui/react-separator"
 
 import { cn } from "@/app/(frontend)/lib/utils"
 
-function Separator({
+function Separator({ 
   className,
   orientation = "horizontal",
   decorative = true,

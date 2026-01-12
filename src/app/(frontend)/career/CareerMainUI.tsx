@@ -1,18 +1,19 @@
 'use client'
 
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, Variants } from 'framer-motion'
 import { useState } from 'react'
 import * as LucideIcons from 'lucide-react'
 import { Job, CareerPage as CareerData } from '@/payload/payload-types'
 
 /* ------------------ Motion Variants ------------------ */
 
-const pageVariants = {
+// Using the Variants type explicitly fixes the "ease: string" TypeScript error
+const pageVariants: Variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },
 }
 
-const sectionVariants = {
+const sectionVariants: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: {
     opacity: 1,
@@ -21,18 +22,28 @@ const sectionVariants = {
   },
 }
 
-const listVariants = {
+const listVariants: Variants = {
+  hidden: { opacity: 0 },
   visible: {
+    opacity: 1,
     transition: {
       staggerChildren: 0.08,
     },
   },
 }
 
-const cardVariants = {
+const cardVariants: Variants = {
   hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: 24 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.4 }
+  },
+  exit: { 
+    opacity: 0, 
+    y: 24,
+    transition: { duration: 0.2 }
+  },
 }
 
 /* ------------------ Component ------------------ */
@@ -54,9 +65,9 @@ export default function CareerView({
       variants={pageVariants}
       initial="hidden"
       animate="visible"
-      className="min-h-screen bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 pt-16 sm:pt-20"
+      className="min-h-screen bg-linear-to-br from-primary/5 via-secondary/5 to-accent/5 pt-16 sm:pt-20"
     >
-      {/* ---------------- Hero ---------------- */}
+      {/* ---------------- Hero Section ---------------- */}
       <motion.section
         variants={sectionVariants}
         initial="hidden"
@@ -73,9 +84,9 @@ export default function CareerView({
         </div>
       </motion.section>
 
-      {/* ---------------- Divider ---------------- */}
+      {/* ---------------- Decorative Divider ---------------- */}
       <div className="relative my-16">
-        <div className="absolute top-1/2 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+        <div className="absolute top-1/2 w-full h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
         <div className="relative flex justify-center">
           <div className="bg-background px-6 py-2 border rounded-full shadow-sm">
             <span className="text-sm sm:text-base font-medium flex items-center gap-2">
@@ -85,7 +96,7 @@ export default function CareerView({
         </div>
       </div>
 
-      {/* ---------------- Benefits ---------------- */}
+      {/* ---------------- Benefits Section ---------------- */}
       <motion.section
         variants={sectionVariants}
         initial="hidden"
@@ -95,6 +106,7 @@ export default function CareerView({
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {staticData.benefits?.map((benefit, i) => {
+            // Using type assertion for icon resolution to avoid ESLint/TS errors
             const Icon =
               (LucideIcons as any)[benefit.iconName || 'Heart'] ||
               LucideIcons.Heart
@@ -102,7 +114,7 @@ export default function CareerView({
             return (
               <div
                 key={i}
-                className="flex gap-4 p-6 rounded-2xl bg-card border"
+                className="flex gap-4 p-6 rounded-2xl bg-card border hover:border-primary/50 transition-colors"
               >
                 <div className="p-3 rounded-xl bg-primary/10 text-primary h-fit">
                   <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -121,12 +133,13 @@ export default function CareerView({
         </div>
       </motion.section>
 
-      {/* ---------------- Jobs ---------------- */}
+      {/* ---------------- Jobs List Section ---------------- */}
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-6 mb-10">
             <h2 className="text-2xl sm:text-3xl font-bold">Open Positions</h2>
 
+            {/* Filter Buttons */}
             <div className="flex flex-wrap gap-2">
               {['all', 'academic', 'admin'].map((cat) => (
                 <button
@@ -161,7 +174,7 @@ export default function CareerView({
                     animate="visible"
                     exit="exit"
                     layout
-                    className="p-6 sm:p-8 rounded-3xl border bg-card hover:shadow-xl transition"
+                    className="p-6 sm:p-8 rounded-3xl border bg-card hover:shadow-xl transition-shadow group"
                   >
                     <div className="flex flex-col sm:flex-row sm:justify-between gap-4">
                       <div>
@@ -174,12 +187,13 @@ export default function CareerView({
                             {job.location}
                           </span>
                         </div>
-                        <h3 className="text-xl sm:text-2xl font-bold">
+                        <h3 className="text-xl sm:text-2xl font-bold group-hover:text-primary transition-colors">
                           {job.title}
                         </h3>
                       </div>
                     </div>
 
+                    {/* Requirements Grid */}
                     <div className="mt-6 pt-6 border-t grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {job.requirements?.map((req, idx) => (
                         <div
@@ -194,15 +208,18 @@ export default function CareerView({
                   </motion.div>
                 ))
               ) : (
+                /* Empty State */
                 <motion.div
+                  key="empty-state"
                   variants={cardVariants}
                   initial="hidden"
                   animate="visible"
-                  className="text-center py-20 bg-muted/20 rounded-3xl border-2 border-dashed"
+                  exit="exit"
+                  className="text-center py-20 bg-muted/20 rounded-3xl border-2 border-dashed flex flex-col items-center"
                 >
-                  <LucideIcons.Search className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                  <LucideIcons.Search className="w-12 h-12 mb-4 text-muted-foreground" />
                   <p className="text-lg font-medium text-muted-foreground">
-                    No open positions found.
+                    No open positions found in this category.
                   </p>
                 </motion.div>
               )}

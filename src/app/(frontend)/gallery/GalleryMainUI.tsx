@@ -4,22 +4,69 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 import { Calendar, X, ZoomIn } from 'lucide-react'
 import Image from 'next/image'
-import { Gallery as GalleryType, Media } from '@/payload/payload-types'
+import type { Gallery as GalleryType, Media } from '@/payload/payload-types'
 
-export default function GalleryView({ initialImages }: { initialImages: GalleryType[] }) {
-  const [activeCategory, setActiveCategory] = useState('all')
-  const [selectedImage, setSelectedImage] = useState<GalleryType | null>(null)
+/* -------------------------------------------------------------------------- */
+/*                                   TYPES                                    */
+/* -------------------------------------------------------------------------- */
 
-  const categories = ['all', ...Array.from(new Set(initialImages.map((img) => img.category)))]
+// Derive category type directly from Payload (future-proof)
+type GalleryCategory = NonNullable<GalleryType['category']>
+
+// UI filter allows "all" + real categories
+type FilterCategory = 'all' | GalleryCategory
+
+// Type guard to safely narrow category values
+function isGalleryCategory(
+  category: GalleryType['category']
+): category is GalleryCategory {
+  return typeof category === 'string'
+}
+
+/* -------------------------------------------------------------------------- */
+/*                               COMPONENT                                    */
+/* -------------------------------------------------------------------------- */
+
+export default function GalleryView({
+  initialImages,
+}: {
+  initialImages: GalleryType[]
+}) {
+  const [activeCategory, setActiveCategory] =
+    useState<FilterCategory>('all')
+
+  const [selectedImage, setSelectedImage] =
+    useState<GalleryType | null>(null)
+
+  /* ----------------------------- CATEGORIES ----------------------------- */
+
+  const categories: FilterCategory[] = [
+    'all',
+    ...Array.from(
+      new Set(
+        initialImages
+          .map((img) => img.category)
+          .filter(isGalleryCategory)
+      )
+    ),
+  ]
+
+  /* ----------------------------- FILTERING ------------------------------ */
 
   const filteredImages =
     activeCategory === 'all'
       ? initialImages
-      : initialImages.filter((img) => img.category === activeCategory)
+      : initialImages.filter(
+          (img) => img.category === activeCategory
+        )
+
+  /* ---------------------------------------------------------------------- */
+  /*                                 RENDER                                 */
+  /* ---------------------------------------------------------------------- */
 
   return (
     <div className="min-h-screen bg-linear-to-b to-background via-background from-primary/5 pb-20">
-      {/* ================= HERO SECTION ================= */}
+      {/* ================= HERO ================= */}
       <section className="relative py-16 md:py-24 lg:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-linear-to-b from-muted/30 to-background" />
 
@@ -39,22 +86,10 @@ export default function GalleryView({ initialImages }: { initialImages: GalleryT
             </h1>
 
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Explore memorable moments from academics, sports, cultural events, and everyday life
-              at Florescent Public School.
+              Explore memorable moments from academics, sports, cultural
+              events, and everyday life at Florescent Public School.
             </p>
           </motion.div>
-        </div>
-        <div className="relative md:mt-20">
-          <div className="absolute top-1/2 left-0 w-full h-1 bg-linear-to-r from-transparent via-primary/30 to-transparent -translate-y-1/2"></div>
-          <div className="relative flex justify-center">
-            <div className="bg-background px-8 py-3 border border-border/50 rounded-full shadow-lg">
-              <span className="text-base font-medium text-foreground flex items-center gap-2">
-                <span className="text-primary">✦</span>
-                Moments That Define Us
-                <span className="text-primary">✦</span>
-              </span>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -97,8 +132,8 @@ export default function GalleryView({ initialImages }: { initialImages: GalleryT
                   onClick={() => setSelectedImage(item)}
                 >
                   <Image
-                    src={(item.image as Media).url || ''}
-                    alt={item.title}
+                    src={(item.image as Media)?.url ?? ''}
+                    alt={item.title ?? ''}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
@@ -107,15 +142,19 @@ export default function GalleryView({ initialImages }: { initialImages: GalleryT
                     <ZoomIn className="text-white w-10 h-10" />
                   </div>
 
-                  <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-bold uppercase tracking-wider">
-                      {item.category}
-                    </span>
-                  </div>
+                  {item.category && (
+                    <div className="absolute top-4 left-4">
+                      <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-bold uppercase tracking-wider">
+                        {item.category}
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="p-6">
-                  <h3 className="font-bold text-xl mb-2 line-clamp-1">{item.title}</h3>
+                  <h3 className="font-bold text-xl mb-2 line-clamp-1">
+                    {item.title}
+                  </h3>
 
                   <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
                     {item.description}
@@ -123,7 +162,11 @@ export default function GalleryView({ initialImages }: { initialImages: GalleryT
 
                   <div className="flex items-center text-sm text-muted-foreground gap-2">
                     <Calendar className="w-4 h-4" />
-                    <span>{item.date ? new Date(item.date).toLocaleDateString() : 'N/A'}</span>
+                    <span>
+                      {item.date
+                        ? new Date(item.date).toLocaleDateString()
+                        : 'N/A'}
+                    </span>
                   </div>
                 </div>
               </motion.div>
@@ -149,12 +192,12 @@ export default function GalleryView({ initialImages }: { initialImages: GalleryT
             <motion.div
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
-              className="relative max-w-5xl w-full aspect-16/9 rounded-2xl overflow-hidden shadow-2xl"
+              className="relative max-w-5xl w-full aspect-video rounded-2xl overflow-hidden shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <Image
-                src={(selectedImage.image as Media).url || ''}
-                alt={selectedImage.title}
+                src={(selectedImage.image as Media)?.url ?? ''}
+                alt={selectedImage.title ?? ''}
                 fill
                 className="object-contain"
               />

@@ -1,17 +1,15 @@
 import React from 'react'
+import Image from 'next/image'
 
 export const Logo = () => {
   return (
     <div className="custom-logo">
-      <img
-        src="/UI/button.svg" // Ensure this is in your /public folder
-        alt="Florescent School Logo"
-        style={{ 
-          width: 'auto', 
-          height: 'auto', // Standard height for the sidebar icon
-          objectFit: 'contain',
-          display: 'block',
-        }}
+      <Image
+        src="/logo.png"
+        alt="Logo"
+        width={150}
+        height={50}
+        priority // Good for LCP (Logo is usually at the top)
       />
     </div>
   )

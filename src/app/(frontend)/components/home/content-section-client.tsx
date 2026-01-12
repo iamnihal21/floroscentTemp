@@ -1,4 +1,3 @@
-
 'use client'
 
 import Image from 'next/image'
@@ -14,6 +13,23 @@ interface Props {
   index: number
   total: number
   scrollYProgress: MotionValue<number>
+}
+
+// Sub-component for Progress Dots to solve the "Rules of Hooks" error
+function ProgressDot({ index, total, scrollYProgress }: { index: number, total: number, scrollYProgress: MotionValue<number> }) {
+  const start = index / total
+  const end = (index + 1) / total
+
+  // Hooks are now called at the top level of this sub-component
+  const opacity = useTransform(scrollYProgress, [start, end], [0.4, 1])
+  const scale = useTransform(scrollYProgress, [start, end], [0.8, 1.2])
+
+  return (
+    <motion.div
+      style={{ opacity, scale }}
+      className="w-2 h-2 md:w-3 md:h-3 bg-primary rounded-full"
+    />
+  )
 }
 
 export function ContentCard({ card, index, total, scrollYProgress }: Props) {
@@ -41,52 +57,17 @@ export function ContentCard({ card, index, total, scrollYProgress }: Props) {
   const imageData = card.image as Media
 
   return (
-    <div
-      className="
-        inset-0
-        grid
-        grid-cols-1
-        lg:grid-cols-2
-        gap-6
-        md:gap-8
-        p-6
-        md:p-10
-        lg:p-12
-        relative
-        lg:absolute
-      "
-    >
+    <div className="inset-0 grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 p-6 md:p-10 lg:p-12 relative lg:absolute">
       {/* LEFT CONTENT */}
       <motion.div
         style={{ opacity: contentOpacity, y: contentY, scale: contentScale }}
-        className="
-          flex
-          flex-col
-          justify-center
-          space-y-4
-          md:space-y-6
-          z-10
-          order-2
-          lg:order-1
-        "
+        className="flex flex-col justify-center space-y-4 md:space-y-6 z-10 order-2 lg:order-1"
       >
-        <h2 className="
-          text-3xl
-          sm:text-4xl
-          md:text-5xl
-          lg:text-6xl
-          font-bold
-        ">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold">
           {card.title}
         </h2>
 
-        <p className="
-          text-base
-          sm:text-lg
-          md:text-xl
-          text-muted-foreground
-          leading-relaxed
-        ">
+        <p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed">
           {card.description}
         </p>
 
@@ -101,15 +82,7 @@ export function ContentCard({ card, index, total, scrollYProgress }: Props) {
       <div className="flex items-center justify-center order-1 lg:order-2">
         <motion.div
           style={{ opacity: imageOpacity, scale: imageScale, rotate: imageRotate }}
-          className="
-            w-full
-            h-[240px]
-            sm:h-[320px]
-            md:h-[420px]
-            lg:h-full
-            max-h-[500px]
-            relative
-          "
+          className="w-full h-[240px] sm:h-[320px] md:h-[420px] lg:h-full max-h-[500px] relative"
         >
           <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-xl border">
             {imageData?.url && (
@@ -122,18 +95,6 @@ export function ContentCard({ card, index, total, scrollYProgress }: Props) {
               />
             )}
           </div>
-
-          {/* Decorative elements — desktop only */}
-          <motion.div
-            className="hidden lg:block absolute -top-4 -right-4 w-8 h-8 bg-primary rounded-full"
-            initial={{ scale: 0 }}
-            whileInView={{ scale: 1 }}
-          />
-          <motion.div
-            className="hidden lg:block absolute -bottom-4 -left-4 w-6 h-6 bg-secondary rounded-full"
-            initial={{ scale: 0 }}
-            whileInView={{ scale: 1 }}
-          />
         </motion.div>
       </div>
     </div>
@@ -165,23 +126,16 @@ export function ContentSectionClient({ cards }: { cards: Card[] }) {
             ))}
           </div>
 
-          {/* Progress dots — responsive */}
+          {/* Progress dots — Using the fixed Sub-component */}
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
-            {cards.map((_, index) => {
-              const start = index / cards.length
-              const end = (index + 1) / cards.length
-
-              const opacity = useTransform(scrollYProgress, [start, end], [0.4, 1])
-              const scale = useTransform(scrollYProgress, [start, end], [0.8, 1.2])
-
-              return (
-                <motion.div
-                  key={index}
-                  style={{ opacity, scale }}
-                  className="w-2 h-2 md:w-3 md:h-3 bg-primary rounded-full"
-                />
-              )
-            })}
+            {cards.map((_, index) => (
+              <ProgressDot 
+                key={index} 
+                index={index} 
+                total={cards.length} 
+                scrollYProgress={scrollYProgress} 
+              />
+            ))}
           </div>
         </div>
       </div>

@@ -23,7 +23,10 @@ export function ResultsSection({ results = [] }: ResultsProps) {
         <div className="flex flex-col gap-24">
           {results.map((result, idx) => {
             const image = result.image as Media
-            const imageOnLeft = idx % 2 === 1 // ✅ KEY RULE
+            const imageOnLeft = idx % 2 === 1 
+
+            // FIX: Ensure title is never null by defaulting to undefined
+            const sanitizedTitle = result.title ?? undefined
 
             return (
               <div
@@ -32,7 +35,7 @@ export function ResultsSection({ results = [] }: ResultsProps) {
               >
                 {/* IMAGE CARD (LEFT when index is odd) */}
                 {imageOnLeft && (
-                  <ImageCard image={image} title={result.title} />
+                  <ImageCard image={image} title={sanitizedTitle} />
                 )}
 
                 {/* CONTENT CARD */}
@@ -40,7 +43,7 @@ export function ResultsSection({ results = [] }: ResultsProps) {
 
                 {/* IMAGE CARD (RIGHT when index is even) */}
                 {!imageOnLeft && (
-                  <ImageCard image={image} title={result.title} />
+                  <ImageCard image={image} title={sanitizedTitle} />
                 )}
               </div>
             )
@@ -107,7 +110,7 @@ function ImageCard({
   title,
 }: {
   image?: Media
-  title?: string
+  title?: string // Note: React props usually prefer undefined over null
 }) {
   return (
     <motion.div

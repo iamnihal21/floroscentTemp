@@ -1,21 +1,24 @@
 import { getPayload } from 'payload'
 import config from '@/payload/payload.config'
-import { 
-  About, 
-  Testimonial, 
-  Result, 
+import type {
+  AboutPage,
+  ContactPage,
+  Testimonial,
   Media,
-  ContactUs
+  Gallery,
 } from '@/payload/payload-types'
 
-/**
- * Global cache for the Payload instance to prevent multiple 
- * connections during Next.js Hot Module Replacement (HMR).
- */
+/* -------------------------------------------------------------------------- */
+/*                         PAYLOAD CLIENT (HMR SAFE)                           */
+/* -------------------------------------------------------------------------- */
+
 let cached = (global as any).payload
 
 if (!cached) {
-  cached = (global as any).payload = { client: null, promise: null }
+  cached = (global as any).payload = {
+    client: null,
+    promise: null,
+  }
 }
 
 export async function getPayloadClient() {
@@ -24,38 +27,42 @@ export async function getPayloadClient() {
   }
 
   if (!cached.promise) {
-    cached.promise = getPayload({
-      config,
-    })
+    cached.promise = getPayload({ config })
   }
 
   try {
     cached.client = await cached.promise
-  } catch (e) {
+  } catch (error) {
     cached.promise = null
-    throw e
+    throw error
   }
 
   return cached.client
 }
 
-/**
- * Type-safe helper functions specifically mapped to your schema 
- * defined in payload.config.ts.
- */
+/* -------------------------------------------------------------------------- */
+/*                               API HELPERS                                  */
+/* -------------------------------------------------------------------------- */
+
 export const api = {
-  // --- Globals ---
-  async getAboutPage(): Promise<About> {
+  /* ------------------------------ GLOBALS ------------------------------ */
+
+  async getAboutPage(): Promise<AboutPage> {
     const payload = await getPayloadClient()
-    return await payload.findGlobal({ slug: 'about' })
+    return payload.findGlobal({
+      slug: 'about-page',
+    })
   },
 
-  async getContactInfo(): Promise<ContactUs> {
+  async getContactPage(): Promise<ContactPage> {
     const payload = await getPayloadClient()
-    return await payload.findGlobal({ slug: 'contact-us' })
+    return payload.findGlobal({
+      slug: 'contact-page',
+    })
   },
 
-  // --- Collections ---
+  /* ----------------------------- COLLECTIONS ---------------------------- */
+
   async getTestimonials(limit = 10): Promise<Testimonial[]> {
     const payload = await getPayloadClient()
     const result = await payload.find({
@@ -66,16 +73,16 @@ export const api = {
     return result.docs
   },
 
-  async getResults(): Promise<Result[]> {
+  async getGalleryItems(): Promise<Gallery[]> {
     const payload = await getPayloadClient()
     const result = await payload.find({
-      collection: 'academic-results',
-      sort: '-year',
+      collection: 'gallery',
+      sort: '-createdAt',
     })
     return result.docs
   },
 
-  async getMediaById(id: string): Promise<Media | null> {
+  async getMediaById(id: number): Promise<Media | null> {
     const payload = await getPayloadClient()
     try {
       return await payload.findByID({
@@ -85,5 +92,5 @@ export const api = {
     } catch {
       return null
     }
-  }
+  },
 }
