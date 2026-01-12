@@ -1,4 +1,5 @@
 'use client'
+export const dynamic = 'force-dynamic'
 
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
@@ -42,7 +43,7 @@ export default function CoCurricularView({ data }: { data: CoCurricularData }) {
   if (events.length === 0) return <div className="py-20 text-center">No events found.</div>
 
   return (
-    <div className="py-16 md:py-24 min-h-screen bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5">
+    <div className="py-16 md:py-24 min-h-screen bg-linear-to-br from-primary/5 via-secondary/5 to-accent/5">
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
         <motion.div
@@ -50,7 +51,7 @@ export default function CoCurricularView({ data }: { data: CoCurricularData }) {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12 md:mb-16"
         >
-          <span className="inline-block px-6 py-3 bg-gradient-to-r from-primary/20 to-secondary/20 text-primary rounded-full text-sm font-semibold mb-4 border border-primary/30">
+          <span className="inline-block px-6 py-3 bg-linear-to-r from-primary/20 to-secondary/20 text-primary rounded-full text-sm font-semibold mb-4 border border-primary/30">
             Co-Curricular Gallery
           </span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
@@ -62,7 +63,7 @@ export default function CoCurricularView({ data }: { data: CoCurricularData }) {
         </motion.div>
 
         <div className="relative md:mt-20 mb-30">
-          <div className="absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent -translate-y-1/2"></div>
+          <div className="absolute top-1/2 left-0 w-full h-1 bg-linear-to-r from-transparent via-primary/30 to-transparent -translate-y-1/2"></div>
           <div className="relative flex justify-center">
             <div className="bg-background px-8 py-3 border border-border/50 rounded-full shadow-lg">
               <span className="text-base font-medium text-foreground flex items-center gap-2">
@@ -89,13 +90,13 @@ export default function CoCurricularView({ data }: { data: CoCurricularData }) {
                     whileTap={{ scale: 0.98 }}
                     className={`w-full text-left p-4 rounded-xl transition-all ${
                       selectedEvent === index 
-                        ? 'bg-gradient-to-r from-primary/20 via-secondary/20 to-accent/20 border-l-4 border-primary' 
+                        ? 'bg-linear-to-r from-primary/20 via-secondary/20 to-accent/20 border-l-4 border-primary' 
                         : 'bg-muted/30 hover:bg-muted/50'
                     }`}
                   >
                     <div className="flex items-start gap-3">
                       <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                        selectedEvent === index ? 'bg-gradient-to-r from-primary to-secondary text-primary-foreground' : 'bg-muted text-muted-foreground'
+                        selectedEvent === index ? 'bg-linear-to-r from-primary to-secondary text-primary-foreground' : 'bg-muted text-muted-foreground'
                       }`}>
                         {index + 1}
                       </div>
@@ -143,10 +144,10 @@ export default function CoCurricularView({ data }: { data: CoCurricularData }) {
                     </div>
                   </div>
                   <div className="flex gap-2">
-                    <button onClick={prevEvent} className="p-3 rounded-full bg-gradient-to-r from-primary/20 to-secondary/20 hover:bg-gradient-to-r hover:from-primary hover:to-secondary hover:text-primary-foreground transition-colors">
+                    <button onClick={prevEvent} className="p-3 rounded-full bg-linear-to-r from-primary/20 to-secondary/20 hover:bg-linear-to-r hover:from-primary hover:to-secondary hover:text-primary-foreground transition-colors">
                       <ChevronLeft className="w-5 h-5" />
                     </button>
-                    <button onClick={nextEvent} className="p-3 rounded-full bg-gradient-to-r from-primary/20 to-secondary/20 hover:bg-gradient-to-r hover:from-primary hover:to-secondary hover:text-primary-foreground transition-colors">
+                    <button onClick={nextEvent} className="p-3 rounded-full bg-linear-to-r from-primary/20 to-secondary/20 hover:bg-linear-to-r hover:from-primary hover:to-secondary hover:text-primary-foreground transition-colors">
                       <ChevronRight className="w-5 h-5" />
                     </button>
                   </div>
@@ -158,7 +159,7 @@ export default function CoCurricularView({ data }: { data: CoCurricularData }) {
 
                 {/* Image Gallery */}
                 <div className="mb-8">
-                  <div className="relative aspect-[16/9] rounded-xl overflow-hidden bg-gradient-to-br from-muted to-muted-foreground/10">
+                  <div className="relative aspect-[16/9] rounded-xl overflow-hidden bg-linear-to-br from-muted to-muted-foreground/10">
                     {eventImages[selectedImageIndex] ? (
                       <div className="relative w-full h-full">
                         <Image
@@ -169,13 +170,13 @@ export default function CoCurricularView({ data }: { data: CoCurricularData }) {
                         />
                         {eventImages.length > 1 && (
                           <>
-                            <button onClick={prevImage} className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-gradient-to-r from-primary/80 to-secondary/80 hover:from-primary hover:to-secondary text-white transition-colors">
+                            <button onClick={prevImage} className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-linear-to-r from-primary/80 to-secondary/80 hover:from-primary hover:to-secondary text-white transition-colors">
                               <ChevronLeft className="w-5 h-5" />
                             </button>
-                            <button onClick={nextImage} className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-gradient-to-r from-primary/80 to-secondary/80 hover:from-primary hover:to-secondary text-white transition-colors">
+                            <button onClick={nextImage} className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-linear-to-r from-primary/80 to-secondary/80 hover:from-primary hover:to-secondary text-white transition-colors">
                               <ChevronRight className="w-5 h-5" />
                             </button>
-                            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-gradient-to-r from-primary/80 to-secondary/80 backdrop-blur-sm rounded-full text-white text-sm font-medium">
+                            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-linear-to-r from-primary/80 to-secondary/80 backdrop-blur-sm rounded-full text-white text-sm font-medium">
                               {selectedImageIndex + 1} / {eventImages.length}
                             </div>
                           </>
@@ -195,7 +196,7 @@ export default function CoCurricularView({ data }: { data: CoCurricularData }) {
                           onClick={() => setSelectedImageIndex(index)}
                           className={`w-2 h-2 rounded-full transition-all ${
                             selectedImageIndex === index 
-                              ? 'bg-gradient-to-r from-primary to-secondary w-4' 
+                              ? 'bg-linear-to-r from-primary to-secondary w-4' 
                               : 'bg-muted hover:bg-primary/50'
                           }`}
                           aria-label={`Go to image ${index + 1}`}
@@ -207,7 +208,7 @@ export default function CoCurricularView({ data }: { data: CoCurricularData }) {
 
                 {/* Highlights */}
                 {currentEvent.highlights && currentEvent.highlights.length > 0 && (
-                  <div className="bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 rounded-xl p-6 border border-primary/20">
+                  <div className="bg-linear-to-r from-primary/10 via-secondary/10 to-accent/10 rounded-xl p-6 border border-primary/20">
                     <h3 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
                       <Star className="w-5 h-5 text-accent" />
                       Event Highlights
@@ -215,7 +216,7 @@ export default function CoCurricularView({ data }: { data: CoCurricularData }) {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {currentEvent.highlights.map((highlight, index) => (
                         <div key={index} className="flex items-center gap-3 p-3 bg-background/50 rounded-lg border border-border">
-                          <div className="w-6 h-6 rounded-full bg-gradient-to-r from-primary/20 to-secondary/20 flex items-center justify-center flex-shrink-0">
+                          <div className="w-6 h-6 rounded-full bg-linear-to-r from-primary/20 to-secondary/20 flex items-center justify-center flex-shrink-0">
                             <span className="text-xs font-bold text-primary">{index + 1}</span>
                           </div>
                           <span className="text-foreground">{highlight.text}</span>
@@ -239,7 +240,7 @@ export default function CoCurricularView({ data }: { data: CoCurricularData }) {
                   onClick={() => selectEvent(index)}
                   className={`w-2 h-2 rounded-full transition-all ${
                     selectedEvent === index 
-                      ? 'bg-gradient-to-r from-primary to-secondary w-6' 
+                      ? 'bg-linear-to-r from-primary to-secondary w-6' 
                       : 'bg-muted hover:bg-primary/50'
                   }`}
                   aria-label={`Go to event ${index + 1}`}
