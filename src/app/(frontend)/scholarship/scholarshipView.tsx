@@ -27,10 +27,16 @@ export default function ScholarshipView({
             <h1 className="text-4xl md:text-6xl font-bold mb-6 text-foreground">
               {data.hero?.title}
             </h1>
-            <p className="text-lg md:text-xl text-secondary leading-relaxed">
+            <p className="text-lg md:text-xl text-secondary leading-relaxed mb-8">
               {data.hero?.description}
             </p>
           </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="w-24 h-1 bg-chart-1 mx-auto mb-10"
+          ></motion.div>
         </div>
 
         <div className="relative md:mt-20">
@@ -98,7 +104,8 @@ export default function ScholarshipView({
             </div>
             <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-6">
               <p className="text-sm text-muted-foreground italic">
-                Scholarships are awarded during the annual &quot;Prize Distribution Program&quot; (Feb-Mar).
+                Scholarships are awarded during the annual &quot;Prize Distribution Program&quot;
+                (Feb-Mar).
               </p>
             </div>
           </motion.div>

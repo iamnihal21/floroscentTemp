@@ -59,7 +59,7 @@ export default function CareerView({ staticData, jobs }: { staticData: CareerDat
         variants={pageVariants}
         initial="hidden"
         animate="visible"
-        className="min-h-screen sm:pt-20"
+        className="min-h-screen sm:pt-20 py-16"
       >
         {/* ---------------- Hero Section ---------------- */}
         <motion.section

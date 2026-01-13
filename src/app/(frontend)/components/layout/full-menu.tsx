@@ -28,17 +28,19 @@ const menuData: MenuItem[] = [
     ],
   },
   {
-    label: 'About Us', href: '/about',
+    label: 'About Us',
+    href: '/about',
   },
   {
-    label: 'Admission',href: '/admissions/',
+    label: 'Admission',
+    href: '/admissions/',
   },
   {
     label: 'Career',
     href: '/career',
   },
   { label: 'Contact Us', href: '/contact-us' },
-  { label: 'Scholarship', href: '/scholership' },
+  { label: 'Scholarship', href: '/scholarship' },
 ]
 
 interface FullMenuProps {
@@ -687,7 +689,6 @@ export function FullMenu({ isOpen, onClose }: FullMenuProps) {
   )
 }
 
-
 // 'use client'
 
 // import { useState, useEffect } from 'react'
@@ -721,7 +722,7 @@ export function FullMenu({ isOpen, onClose }: FullMenuProps) {
 //   { label: 'Admission', href: '/admissions/' },
 //   { label: 'Career', href: '/career' },
 //   { label: 'Contact Us', href: '/contact-us' },
-//   { label: 'Scholarship', href: '/scholership' },
+//   { label: 'Scholarship', href: '/scholarship' },
 // ]
 
 // interface FullMenuProps {

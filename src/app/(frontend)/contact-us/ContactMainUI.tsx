@@ -53,8 +53,13 @@ export default function ContactView({ data }: { data: ContactData }) {
             <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
               {data.hero?.subtitle}
             </p>
-            <div className="w-24 h-1 bg-chart-1 mx-auto"></div>
           </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="w-24 h-1 bg-chart-1 mx-auto mb-10"
+            ></motion.div>
         </div>
 
         <motion.div
