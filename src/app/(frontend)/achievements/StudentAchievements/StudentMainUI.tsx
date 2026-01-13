@@ -17,13 +17,11 @@ export default function StudentView({ students }: { students: StudentAchievement
   const achievementIcons = [Trophy, Star, Target, Zap, TrendingUp]
 
   return (
-    <div className="relative from-background via-background to-primary/5">
+    <section className="relative bg-linear-to-br from-primary/5 via-secondary/5 to-accent/5">
       {/* ================= HEADER SECTION ================= */}
       <section className="relative py-24 overflow-hidden">
         {/* Background decoration */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full bg-gradient-to-r from-primary/10 to-accent/10 blur-[160px]" />
-        </div>
+        
 
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
@@ -36,39 +34,46 @@ export default function StudentView({ students }: { students: StudentAchievement
               initial={{ scale: 0.9, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: true }}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-primary/15 via-secondary/15 to-accent/15 border border-primary/20 text-primary font-bold mb-6 text-sm"
+              className="inline-flex items-center gap-3 px-6 py-3 rounded-full"
             >
-              <span className="tracking-[0.1em]">Excellence Redefined</span>
+              <span className="tracking-[0.1em] inline-block px-4 py-2 bg-secondary/10 text-chart-1 rounded-full text-sm font-semibold mb-6">Excellence Redefined</span>
             </motion.div>
 
-            <motion.h2
+            <motion.h1
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
               viewport={{ once: true }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground mb-6"
+              className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 sm:mb-6 mb-6" 
             >
-              Our{' '}
-              <span className="text-primary">
-                Star
-              </span>{' '}
-              Performers
-            </motion.h2>
+              Our Star Performers
+            </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
               viewport={{ once: true }}
-              className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto"
+              className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8"
             >
               Celebrating exceptional achievements across academics, sports, and arts
             </motion.p>
           </motion.div>
+          <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                    className="w-24 h-1 bg-chart-1 mx-auto mb-10"
+                  ></motion.div>
         </div>
 
         {/* Divider */}
-        <div className="relative md:mt-20">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="relative mt-20"
+        >
           <div className="absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent -translate-y-1/2"></div>
           <div className="relative flex justify-center">
             <div className="bg-background px-8 py-3 border border-border/50 rounded-full shadow-lg">
@@ -79,11 +84,11 @@ export default function StudentView({ students }: { students: StudentAchievement
               </span>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* ================= MAIN CONTENT SECTION ================= */}
-      <section className="relative bg-white py-24">
+      <section className="relative py-10">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-10">
             {students?.map((student, index) => {
@@ -107,7 +112,7 @@ export default function StudentView({ students }: { students: StudentAchievement
                     {/* Image */}
                     <div className="relative w-full h-56 md:h-64 overflow-hidden">
                       <Image
-                        src={(student.image as Media)?.url || ''}
+                        src={(student.image as Media)?.url || '/image.png'}
                         alt={student.name}
                         fill
                         className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-1"
@@ -161,6 +166,6 @@ export default function StudentView({ students }: { students: StudentAchievement
           </div>
         </div>
       </section>
-    </div>
+    </section>
   )
 }

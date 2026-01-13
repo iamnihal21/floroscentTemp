@@ -36,7 +36,10 @@ const CountingNumber = ({ value }: { value: string }) => {
 export default function WhyChooseUsView({ data }: { data: AdmissionData }) {
   return (
     <section className="pb-24 bg-gradient-to-b to-background via-background from-primary/5">
-      <div className="container mx-auto px-4">
+      <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }} className="container mx-auto px-4">
 
         {/* STATS */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-24">
@@ -92,7 +95,7 @@ export default function WhyChooseUsView({ data }: { data: AdmissionData }) {
             )
           })}
         </div>
-      </div>
+      </motion.div>
     </section>
   )
 }

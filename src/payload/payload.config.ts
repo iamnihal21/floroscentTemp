@@ -19,6 +19,7 @@ import { Jobs } from './collections/Jobs'
 import { CareerPage } from './globals/CareerPage'
 import { ScholarshipPage } from './globals/ScholarshipPage'
 import { Scholarships } from './collections/Scholarships'
+import { Inquiries } from './collections/Inquiries'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -34,6 +35,7 @@ export default buildConfig({
     Gallery,
     Jobs,
     Scholarships,
+    Inquiries,
   ],
   globals: [Home, AboutPage, ContactPage, AchievementsPage, AcademicsPage, AdmissionPage, CareerPage, ScholarshipPage],
   editor: lexicalEditor({}),

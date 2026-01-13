@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import Image from 'next/image'
 import * as motion from 'framer-motion/client'
@@ -8,11 +8,11 @@ export default function AboutUI({ data }: { data: any }) {
   const { hero, leadership, establishedYear } = data
 
   return (
-    <section className="bg-background">
+    <section className="bg-linear-to-br from-primary/5 via-secondary/5 to-accent/5">
       {/* HERO */}
-      <section className="relative overflow-hidden py-24 md:py-32">
+      <section className="relative overflow-hidden lg:py-24 md:py-32 ">
         <div className="absolute inset-0 bg-linear-to-br from-primary/10 via-transparent to-secondary/10" />
-        <div className="relative container mx-auto px-4 text-center max-w-4xl">
+        <div className="relative container mx-auto px-4 text-center max-w-4xl ">
           <motion.span
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -30,23 +30,38 @@ export default function AboutUI({ data }: { data: any }) {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-lg md:text-xl text-muted-foreground"
+            className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed"
           >
             {hero?.description}
           </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="w-24 h-1 bg-chart-1 mx-auto mb-10"
+          ></motion.div>
         </div>
-        <div className="relative mt-20">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="relative py-10"
+        >
           <div className="absolute top-1/2 left-0 w-full h-1 bg-linear-to-r from-transparent via-primary/30 to-transparent -translate-y-1/2" />
           <div className="relative flex justify-center">
             <div className="bg-background px-8 py-3 border border-border/50 rounded-full shadow-lg">
-              Guiding Florescent Since {establishedYear}
+              <span className="text-base font-medium text-foreground flex items-center gap-2">
+                <span className="text-primary">✦</span>
+                Guiding Florescent Since {establishedYear}
+                <span className="text-primary">✦</span>
+              </span>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* LEADERSHIP */}
-      <section className="space-y-12 px-4 md:px-8 lg:px-16 pb-20">
+      <section className="space-y-12 px-4 md:px-8 lg:px-16 pb-20 ">
         {leadership?.map((leader: any, index: number) => (
           <motion.div
             key={index}
@@ -54,12 +69,19 @@ export default function AboutUI({ data }: { data: any }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: index * 0.15 }}
-            className="w-full bg-background border border-border/50 rounded-3xl p-8 md:p-12 flex flex-col md:flex-row gap-10 items-center"
+            className="w-full bg-background border border-border/50 rounded-3xl p-8 md:p-12 flex flex-col md:flex-row gap-10 items-center bg-white"
           >
             <div className="flex-shrink-0">
-              <div className={`relative w-48 h-48 rounded-full overflow-hidden border-4 bg-linear-to-br ${leader.gradient}`}>
+              <div
+                className={`relative w-48 h-48 rounded-full overflow-hidden border-4 bg-linear-to-br ${leader.gradient}`}
+              >
                 {leader.image && typeof leader.image !== 'string' && (
-                  <Image src={(leader.image as Media).url || ''} alt={leader.name} fill className="object-cover" />
+                  <Image
+                    src={(leader.image as Media).url || ''}
+                    alt={leader.name}
+                    fill
+                    className="object-cover"
+                  />
                 )}
               </div>
             </div>

@@ -73,6 +73,7 @@ export interface Config {
     gallery: Gallery;
     jobs: Job;
     scholarships: Scholarship;
+    inquiries: Inquiry;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -86,6 +87,7 @@ export interface Config {
     gallery: GallerySelect<false> | GallerySelect<true>;
     jobs: JobsSelect<false> | JobsSelect<true>;
     scholarships: ScholarshipsSelect<false> | ScholarshipsSelect<true>;
+    inquiries: InquiriesSelect<false> | InquiriesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -250,6 +252,21 @@ export interface Scholarship {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "inquiries".
+ */
+export interface Inquiry {
+  id: number;
+  studentName: string;
+  parentName: string;
+  email: string;
+  phone: string;
+  classFor: string;
+  message?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -295,6 +312,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'scholarships';
         value: number | Scholarship;
+      } | null)
+    | ({
+        relationTo: 'inquiries';
+        value: number | Inquiry;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -434,6 +455,20 @@ export interface ScholarshipsSelect<T extends boolean = true> {
   reward?: T;
   criteria?: T;
   iconName?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "inquiries_select".
+ */
+export interface InquiriesSelect<T extends boolean = true> {
+  studentName?: T;
+  parentName?: T;
+  email?: T;
+  phone?: T;
+  classFor?: T;
+  message?: T;
   updatedAt?: T;
   createdAt?: T;
 }

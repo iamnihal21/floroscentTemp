@@ -30,13 +30,23 @@ export default function AdmissionView({ data }: { data: AdmissionData }) {
               {data.admissionProcess?.title}
             </h1>
 
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
               Begin your child’s educational journey with a transparent and student-focused
               admission process.
             </p>
           </motion.div>
+          <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="w-24 h-1 bg-chart-1 mx-auto mb-10"
+            ></motion.div>
         </div>
-        <div className="relative md:mt-20">
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }} className="relative md:mt-20">
           <div className="absolute top-1/2 left-0 w-full h-1 bg-linear-to-r from-transparent via-primary/30 to-transparent -translate-y-1/2"></div>
           <div className="relative flex justify-center">
             <div className="bg-background px-8 py-3 border border-border/50 rounded-full shadow-lg">
@@ -47,12 +57,15 @@ export default function AdmissionView({ data }: { data: AdmissionData }) {
               </span>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* ADMISSION PROCESS */}
       <section className="pb-24">
-        <div className="container mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }} className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* STEP NAVIGATION */}
             <div className="lg:col-span-4 space-y-4">
@@ -126,7 +139,7 @@ export default function AdmissionView({ data }: { data: AdmissionData }) {
               )}
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
     </div>
   )

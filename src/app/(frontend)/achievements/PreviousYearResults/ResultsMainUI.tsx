@@ -40,7 +40,7 @@ export default function ResultsView({ data }: { data: ResultsData }) {
   return (
     <div className="min-h-screen from-background via-background to-primary/5">
       {/* REDESIGNED HERO SECTION */}
-      <section className="relative overflow-hidden md:py-32">
+      <section className="relative overflow-hidden py-20">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-1/4 -right-32 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 blur-[150px]"></div>
           <div className="absolute bottom-1/4 -left-32 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-accent/10 via-primary/10 to-secondary/10 blur-[150px]"></div>
@@ -52,9 +52,9 @@ export default function ResultsView({ data }: { data: ResultsData }) {
               <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-primary/15 to-secondary/15 border border-primary/20 mb-8"
+                className="inline-flex items-center gap-3 px-6 py-3 rounded-full"
               >
-                <span className="text-primary font-bold tracking-[0.1em] text-sm">
+                <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-secondary/10 text-primary rounded-full text-xs sm:text-sm font-semibold mb-4">
                   Institutional Excellence
                 </span>
               </motion.div>
@@ -63,19 +63,26 @@ export default function ResultsView({ data }: { data: ResultsData }) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight"
+                className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight"
               >
                 {data?.title}
+                {/* {data.title?.split(' ')[0]} <span className="text-chart-1">{data.title?.split(' ').slice(1).join(' ')}</span> */}
               </motion.h1>
 
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
+                className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed"
               >
                 {data?.description}
               </motion.p>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="w-24 h-1 bg-chart-1 mx-auto mb-10"
+              ></motion.div>
             </div>
 
             {/* DYNAMIC STATS FROM DB */}
@@ -83,7 +90,7 @@ export default function ResultsView({ data }: { data: ResultsData }) {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20"
+              className="grid grid-cols-2 md:grid-cols-4 gap-6"
             >
               {data?.stats?.map((stat, index) => (
                 <div
@@ -100,7 +107,13 @@ export default function ResultsView({ data }: { data: ResultsData }) {
                 </div>
               ))}
             </motion.div>
-            <div className="relative md:mt-20">
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="relative py-10"
+            >
               <div className="absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent -translate-y-1/2"></div>
               <div className="relative flex justify-center">
                 <div className="bg-background px-8 py-3 border border-border/50 rounded-full shadow-lg">
@@ -111,13 +124,13 @@ export default function ResultsView({ data }: { data: ResultsData }) {
                   </span>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* FEATURE HIGHLIGHT */}
-      <div className="container mx-auto px-4 relative z-10 md:mt-10">
+      <div className="container mx-auto px-4 relative z-10 ">
         <div className="max-w-5xl mx-auto">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -149,13 +162,7 @@ export default function ResultsView({ data }: { data: ResultsData }) {
           {/* Main Image Slider */}
           <div className="relative rounded-3xl overflow-hidden bg-muted aspect-[16/9] mb-8 shadow-2xl">
             {imageData?.url && (
-              <Image
-                src={imageData.url}
-                alt="IMAGE"
-                fill
-                className="object-cover"
-                priority
-              />
+              <Image src={imageData.url} alt="IMAGE" fill className="object-cover" priority />
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
 
