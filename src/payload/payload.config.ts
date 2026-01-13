@@ -23,13 +23,17 @@ import { Inquiries } from './collections/Inquiries'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
-
 export default buildConfig({
   admin: {
-    autoLogin: { email: 'temp@gmail.com', password: '1234', prefillOnly: true },
+    user: 'users',
   },
+
   collections: [
-    { slug: 'users', auth: true, fields: [] },
+    {
+      slug: 'users',
+      auth: true,
+      fields: [],
+    },
     Media,
     Testimonials,
     Gallery,
@@ -37,31 +41,49 @@ export default buildConfig({
     Scholarships,
     Inquiries,
   ],
-  globals: [Home, AboutPage, ContactPage, AchievementsPage, AcademicsPage, AdmissionPage, CareerPage, ScholarshipPage],
+
+  globals: [
+    Home,
+    AboutPage,
+    ContactPage,
+    AchievementsPage,
+    AcademicsPage,
+    AdmissionPage,
+    CareerPage,
+    ScholarshipPage,
+  ],
+
   editor: lexicalEditor({}),
-  secret: process.env.PAYLOAD_SECRET || '726d7f73873bff8db79de76eb067bad204c2ec494ef95e52824b132622d69e91',
+
+  secret: process.env.PAYLOAD_SECRET!,
+
   db: postgresAdapter({
-    pool: { connectionString: process.env.DATABASE_URL || '' },
+    pool: {
+      connectionString: process.env.DATABASE_URL!,
+    },
   }),
+
   plugins: [
     s3Storage({
       collections: {
-        media: true, 
+        media: true,
       },
-      bucket: process.env.SUPABASE_BUCKET || '',
+      bucket: process.env.SUPABASE_BUCKET!,
       config: {
         credentials: {
-          accessKeyId: process.env.SUPABASE_S3_ACCESS_KEY_ID || '',
-          secretAccessKey: process.env.SUPABASE_S3_SECRET_ACCESS_KEY || '',
+          accessKeyId: process.env.SUPABASE_S3_ACCESS_KEY_ID!,
+          secretAccessKey: process.env.SUPABASE_S3_SECRET_ACCESS_KEY!,
         },
         region: process.env.SUPABASE_REGION || 'ap-south-1',
-        endpoint: process.env.SUPABASE_S3_ENDPOINT || '',
+        endpoint: process.env.SUPABASE_S3_ENDPOINT!,
         forcePathStyle: true,
       },
     }),
   ],
+
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
+
   sharp,
 })
