@@ -4,6 +4,8 @@ import config from '@/payload/payload.config'
 import GalleryMainUI from './GalleryMainUI'
 import GallerySkeleton from './GallerySkeleton'
 
+export const revalidate = 60
+
 export default async function GalleryPage() {
   return (
     <main className="min-h-screen bg-background">

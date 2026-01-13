@@ -4,6 +4,8 @@ import config from '@/payload/payload.config'
 import ResultsMainUI from './ResultsMainUI'
 import ResultsSkeleton from './ResultsSkeleton'
 
+export const revalidate = 60
+
 export default async function ResultsPage() {
   return (
     <main className="min-h-screen bg-background">

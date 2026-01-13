@@ -4,6 +4,8 @@ import config from '@/payload/payload.config'
 import ContactMainUI from './ContactMainUI'
 import ContactSkeleton from './ContactSkeleton'
 
+export const revalidate = 60
+
 export default async function ContactPage() {
   return (
     <main className="min-h-screen bg-background">

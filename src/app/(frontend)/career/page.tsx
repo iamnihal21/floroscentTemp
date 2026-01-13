@@ -4,6 +4,8 @@ import config from '@/payload/payload.config'
 import CareerMainUI from './CareerMainUI'
 import CareerSkeleton from './CareerSkeleton'
 
+export const revalidate = 60
+
 export default async function CareerPage() {
   return (
     <main className="min-h-screen bg-background">

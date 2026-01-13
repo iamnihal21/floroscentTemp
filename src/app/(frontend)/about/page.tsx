@@ -4,6 +4,8 @@ import config from '@/payload/payload.config'
 import AboutUI from './AboutUI'
 import AboutSkeleton from './AboutSkeleton'
 
+export const revalidate = 60
+
 export default function AboutPage() {
   return (
     <main className="min-h-screen bg-background">

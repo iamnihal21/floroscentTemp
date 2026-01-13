@@ -5,6 +5,8 @@ import { TestimonialsSlider } from '@/app/(frontend)/components/home/testimonial
 import { MapsSection } from '@/app/(frontend)/components/home/maps-section'
 import { ResultsSection } from '@/app/(frontend)/components/home/result-section'
 
+export const revalidate = 60
+
 export default async function Page() {
   const payload = await getPayloadClient()
 

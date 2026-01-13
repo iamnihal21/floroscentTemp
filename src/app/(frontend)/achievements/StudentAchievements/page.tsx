@@ -4,6 +4,8 @@ import StudentView from './StudentMainUI' // Ensure the filename matches your UI
 import { Suspense } from 'react'
 import StudentSkeleton from './StudentSkeleton'
 
+export const revalidate = 60
+
 export default async function AchievementsLandingPage() {
   const payload = await getPayload({ config })
   

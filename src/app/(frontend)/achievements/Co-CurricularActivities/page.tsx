@@ -4,6 +4,8 @@ import config from '@/payload/payload.config'
 import CoCurricularMainUI from './CoCurricularMainUI'
 import CoCurricularSkeleton from './CoCurricularSkeleton'
 
+export const revalidate = 60
+
 export default async function CoCurricularPage() {
   return (
     <main className="min-h-screen bg-background">

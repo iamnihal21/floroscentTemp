@@ -2,6 +2,8 @@ import { getPayload } from 'payload'
 import config from '@/payload/payload.config'
 import ScholarshipView from './scholershipView'
 
+export const revalidate = 60
+
 export default async function Page() {
   const payload = await getPayload({ config })
   

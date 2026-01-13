@@ -4,6 +4,8 @@ import config from '@/payload/payload.config'
 import SchoolMainUI from './SchoolMainUI'
 import SchoolSkeleton from './SchoolSkeleton'
 
+export const revalidate = 60
+
 export default async function SchoolAchievementsPage() {
   return (
     <main className="min-h-screen bg-background">
