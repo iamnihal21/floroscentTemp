@@ -337,7 +337,6 @@ export function FullMenu({ isOpen, onClose }: FullMenuProps) {
                           <div className="p-6">
                             {/* Search - Mobile */}
                             <div className="mb-8 relative">
-                              <Search className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                               <Input
                                 type="text"
                                 placeholder="Search"
@@ -501,7 +500,6 @@ export function FullMenu({ isOpen, onClose }: FullMenuProps) {
                         {/* Search Input */}
                         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
                           <div className="mb-10 md:mb-14 relative">
-                            <Search className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                             <Input
                               type="text"
                               placeholder="Search"
