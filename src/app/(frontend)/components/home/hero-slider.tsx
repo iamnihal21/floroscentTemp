@@ -142,10 +142,6 @@ export function HeroSlider({ slides }: HeroSliderProps) {
         </div>
 
         <div className="absolute bottom-6 left-6 z-20 text-white">
-          <p className="text-sm leading-relaxed mb-3">
-            An independent, co-educational college<br />
-            preparatory day school for grades 7–12
-          </p>
           <div className="flex gap-3">
             {slides.map((_, i) => (
               <button
