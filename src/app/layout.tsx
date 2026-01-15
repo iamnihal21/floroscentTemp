@@ -15,7 +15,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'Florescent public school',
   description: 'Empowering students for a brighter future',
+  icons: {
+    icon: '/favicon.ico',
+  },
 }
+
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
