@@ -79,12 +79,12 @@ export default function CareerView({ staticData, jobs }: { staticData: CareerDat
               {staticData.hero?.description}
             </p>
           </div>
-           <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
-                        className="w-24 h-1 bg-chart-1 mx-auto mb-10"
-                      ></motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="w-24 h-1 bg-chart-1 mx-auto mb-10"
+          ></motion.div>
         </motion.section>
 
         {/* ---------------- Decorative Divider ---------------- */}
@@ -107,37 +107,6 @@ export default function CareerView({ staticData, jobs }: { staticData: CareerDat
             </div>
           </div>
         </motion.div>
-
-        {/* ---------------- Benefits Section ---------------- */}
-        <motion.section
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="container mx-auto px-4"
-        >
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {staticData.benefits?.map((benefit, i) => {
-              // Using type assertion for icon resolution to avoid ESLint/TS errors
-              const Icon = (LucideIcons as any)[benefit.iconName || 'Heart'] || LucideIcons.Heart
-
-              return (
-                <div
-                  key={i}
-                  className="flex gap-4 p-6 rounded-2xl bg-card border hover:border-primary/50 transition-colors"
-                >
-                  <div className="p-3 rounded-xl bg-primary/10 text-primary h-fit">
-                    <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-base sm:text-lg mb-1">{benefit.title}</h3>
-                    <p className="text-sm text-muted-foreground">{benefit.description}</p>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </motion.section>
 
         {/* ---------------- Jobs List Section ---------------- */}
         <section className="py-10">
@@ -233,6 +202,39 @@ export default function CareerView({ staticData, jobs }: { staticData: CareerDat
             </motion.div>
           </div>
         </section>
+
+        {/* ---------------- Benefits Section ---------------- */}
+
+        <motion.section
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="container mx-auto px-4"
+        >
+          <h2 className="text-2xl sm:text-3xl font-bold mb-10">Benefits With Florescent</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {staticData.benefits?.map((benefit, i) => {
+              // Using type assertion for icon resolution to avoid ESLint/TS errors
+              const Icon = (LucideIcons as any)[benefit.iconName || 'Heart'] || LucideIcons.Heart
+
+              return (
+                <div
+                  key={i}
+                  className="flex gap-4 p-6 rounded-2xl bg-card border hover:border-primary/50 transition-colors"
+                >
+                  <div className="p-3 rounded-xl bg-primary/10 text-primary h-fit">
+                    <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-base sm:text-lg mb-1">{benefit.title}</h3>
+                    <p className="text-sm text-muted-foreground">{benefit.description}</p>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </motion.section>
       </motion.div>
     </section>
   )

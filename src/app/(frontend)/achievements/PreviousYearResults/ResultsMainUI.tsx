@@ -1,189 +1,209 @@
 'use client'
-import { motion } from 'framer-motion'
-import { useState } from 'react'
-import { ChevronLeft, ChevronRight, Award, Trophy } from 'lucide-react'
-import { AchievementsPage, Media } from '@/payload/payload-types'
+import React, { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { ChevronLeft, ChevronRight, GraduationCap, TrendingUp, Award } from 'lucide-react'
+import { AchievementsPage, Media, Result } from '@/payload/payload-types'
 import Image from 'next/image'
 
-type ResultsData = AchievementsPage['resultsSection']
+interface ResultsMainUIProps {
+  header: AchievementsPage['resultsSection']
+  results: Result[]
+}
 
-const statColors = [
-  'from-primary/20 to-primary/10',
-  'from-secondary/20 to-secondary/10',
-  'from-accent/20 to-accent/10',
-  'from-orange-500/20 to-orange-500/10',
-]
-
-export default function ResultsView({ data }: { data: ResultsData }) {
+export default function ResultsMainUI({ header, results }: ResultsMainUIProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const results = data?.results || []
-
-  const nextImage = () => setCurrentIndex((prev) => (prev + 1) % results.length)
-  const prevImage = () => setCurrentIndex((prev) => (prev - 1 + results.length) % results.length)
 
   if (!results || results.length === 0) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <Award className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-          <h3 className="text-2xl font-bold">No results available</h3>
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+        <div className="text-center bg-white p-12 rounded-[2rem] shadow-sm border border-slate-100">
+          <Award className="w-16 h-16 text-slate-300 mx-auto mb-4" />
+          <h3 className="text-xl font-bold text-slate-800">No records found</h3>
+          <p className="text-slate-500">Academic records will appear here once updated.</p>
         </div>
       </div>
     )
   }
 
-  const currentResult = results[currentIndex]
-  const imageData = currentResult?.image as Media
-
-  // Calculations for Performance Section
+  const current = results[currentIndex]
+  const image = current.image as Media
 
   return (
-    <div className="min-h-screen from-background via-background to-primary/5">
-      {/* REDESIGNED HERO SECTION */}
-      <section className="relative overflow-hidden py-20">
+    <div className="min-h-screen bg-[#f8fafc] pb-20">
+      {/* 1. HEADER SECTION */}
+      <section className="relative overflow-hidden py-20 mt-10">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 -right-32 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 blur-[150px]"></div>
-          <div className="absolute bottom-1/4 -left-32 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-accent/10 via-primary/10 to-secondary/10 blur-[150px]"></div>
+          <div className="absolute top-1/4 -right-32 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-blue-500/10 via-indigo-500/10 to-purple-500/10 blur-[150px]"></div>
+          <div className="absolute bottom-1/4 -left-32 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-purple-500/10 via-blue-500/10 to-indigo-500/10 blur-[150px]"></div>
         </div>
 
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center">
-              <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="inline-flex items-center gap-3 px-6 py-3 rounded-full"
-              >
-                <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-secondary/10 text-primary rounded-full text-xs sm:text-sm font-semibold mb-4">
-                  Institutional Excellence
-                </span>
-              </motion.div>
+        <div className="container mx-auto px-4 relative z-10 text-center">
+          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
+            <span className="inline-block px-6 py-2 bg-primary/10 text-primary rounded-full text-sm font-semibold mb-6">
+              Institutional Excellence
+            </span>
+          </motion.div>
 
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-                className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight"
-              >
-                {data?.title}
-                {/* {data.title?.split(' ')[0]} <span className="text-chart-1">{data.title?.split(' ').slice(1).join(' ')}</span> */}
-              </motion.h1>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-4xl md:text-6xl font-bold mb-6"
+          >
+            {header?.title || 'Academic Achievements'}
+          </motion.h1>
 
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed"
-              >
-                {data?.description}
-              </motion.p>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-                className="w-24 h-1 bg-chart-1 mx-auto mb-10"
-              ></motion.div>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-lg text-slate-500 mb-8 max-w-2xl mx-auto leading-relaxed"
+          >
+            {header?.description}
+          </motion.p>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="relative py-10"
+        >
+          <div className="absolute top-1/2 left-0 w-full h-1 bg-linear-to-r from-transparent via-primary/30 to-transparent -translate-y-1/2" />
+          <div className="relative flex justify-center">
+            <div className="bg-background px-8 py-3 border border-border/50 rounded-full shadow-lg">
+              <span className="text-base font-medium text-foreground flex items-center gap-2">
+                <span className="text-primary">✦</span>
+                Guiding Florescent Since
+                <span className="text-primary">✦</span>
+              </span>
             </div>
-
-            {/* DYNAMIC STATS FROM DB */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="grid grid-cols-2 md:grid-cols-4 gap-6"
-            >
-              {data?.stats?.map((stat, index) => (
-                <div
-                  key={stat.id}
-                  className="bg-card/80 backdrop-blur-sm border border-border/50 rounded-2xl p-6 text-center hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 transition-all duration-300"
-                >
-                  <div
-                    className={`inline-block p-3 rounded-xl bg-gradient-to-r ${statColors[index % statColors.length]} mb-4`}
-                  >
-                    <span className="text-2xl">{stat.iconEmoji || '⭐'}</span>
-                  </div>
-                  <div className="text-3xl font-bold text-foreground mb-2">{stat.number}</div>
-                  <div className="text-sm text-muted-foreground font-medium">{stat.label}</div>
-                </div>
-              ))}
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="relative py-10"
-            >
-              <div className="absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent -translate-y-1/2"></div>
-              <div className="relative flex justify-center">
-                <div className="bg-background px-8 py-3 border border-border/50 rounded-full shadow-lg">
-                  <span className="text-base font-medium text-foreground flex items-center gap-2">
-                    <span className="text-primary">✦</span>
-                    Proven Results Over the Years
-                    <span className="text-primary">✦</span>
-                  </span>
-                </div>
-              </div>
-            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
-      {/* FEATURE HIGHLIGHT */}
-      <div className="container mx-auto px-4 relative z-10 ">
-        <div className="max-w-5xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.4 }}
-            className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-card via-card to-primary/5 border border-border shadow-2xl"
-          >
-            <div className="relative p-8 md:p-12 flex flex-col md:flex-row items-center gap-8 md:gap-12">
-              <div className="w-24 h-24 rounded-2xl bg-gradient-to-r from-primary to-secondary flex items-center justify-center flex-shrink-0 shadow-xl shadow-primary/20">
-                <Trophy className="w-12 h-12 text-white" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-                  Legacy of Excellence
-                </h3>
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  Our institution stands as a beacon of quality education, consistently setting
-                  benchmarks in academic and holistic development.
-                </p>
-              </div>
+      <div className="container mx-auto px-4 space-y-12 max-w-6xl">
+        <div className="h-auto relative aspect-[16/9] md:aspect-[21/9] rounded-[2.5rem] overflow-hidden shadow-2xl border-[8px] md:border-[12px] border-white bg-slate-200">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={current.id}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.6 }}
+              className="relative h-full w-full"
+            >
+              {image?.url ? (
+                <Image src={image.url} alt={current.year} fill className="object-cover" priority />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-slate-100 text-slate-400 font-bold text-xs">
+                  IMAGE NOT PROVIDED
+                </div>
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1e3a5a]/90 via-transparent to-transparent" />
+            </motion.div>
+          </AnimatePresence>
+
+          {results.length > 1 && (
+            <div className="absolute top-1/2 -translate-y-1/2 w-full flex justify-between px-4 md:px-8 z-20">
+              <button
+                onClick={() =>
+                  setCurrentIndex((prev) => (prev - 1 + results.length) % results.length)
+                }
+                className="p-3 md:p-5 bg-white/20 backdrop-blur-md rounded-full text-white hover:bg-[#ffc107] hover:text-[#1e3a5a] transition-all"
+              >
+                <ChevronLeft size={24} />
+              </button>
+              <button
+                onClick={() => setCurrentIndex((prev) => (prev + 1) % results.length)}
+                className="p-3 md:p-5 bg-white/20 backdrop-blur-md rounded-full text-white hover:bg-[#ffc107] hover:text-[#1e3a5a] transition-all"
+              >
+                <ChevronRight size={24} />
+              </button>
             </div>
-          </motion.div>
+          )}
         </div>
-      </div>
 
-      {/* GALLERY & DATA SECTION */}
-      <div className="container mx-auto px-4 py-20">
-        <div className="max-w-4xl mx-auto">
-          {/* Main Image Slider */}
-          <div className="relative rounded-3xl overflow-hidden bg-muted aspect-[16/9] mb-8 shadow-2xl">
-            {imageData?.url && (
-              <Image src={imageData.url} alt="IMAGE" fill className="object-cover" priority />
-            )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+        {/* 3. PERFORMANCE DATA (Summary Stats Group) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { label: 'Year', val: current.year, icon: Award },
+            {
+              label: 'School Performance',
+              val: `${current.summaryStats?.schoolResult}%`,
+              icon: TrendingUp,
+            },
+            {
+              label: 'Board Performance',
+              val: `${current.summaryStats?.boardResult}%`,
+              icon: GraduationCap,
+            },
+          ].map((item, i) => (
+            <motion.div
+              key={i}
+              whileHover={{ y: -5 }}
+              className="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 text-center"
+            >
+              <item.icon className="w-6 h-6 mx-auto mb-4 text-[#ffc107]" />
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">
+                {item.label}
+              </p>
+              <p className="text-3xl font-black text-[#1e3a5a]">{item.val}</p>
+            </motion.div>
+          ))}
+        </div>
 
-            {results.length > 1 && (
-              <div className="absolute right-8 bottom-8 flex gap-2">
-                <button
-                  onClick={prevImage}
-                  className="p-3 rounded-full bg-white/10 backdrop-blur-md hover:bg-primary text-white transition-all"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={nextImage}
-                  className="p-3 rounded-full bg-white/10 backdrop-blur-md hover:bg-primary text-white transition-all"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              </div>
-            )}
+        {/* 4. STUDENT LIST (Array Field) */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="bg-white rounded-[2.5rem] overflow-hidden shadow-sm border border-slate-100"
+        >
+          <div className="p-8 bg-[#1e3a5a] text-white flex justify-between items-center">
+            <h3 className="font-black uppercase tracking-widest text-sm flex items-center gap-3">
+              <GraduationCap className="text-[#ffc107]" /> Detailed Merit List
+            </h3>
+            <span className="text-[10px] font-bold px-3 py-1 bg-white/10 rounded-full">
+              {current.studentResults?.length || 0} Entries
+            </span>
           </div>
-        </div>
+
+          <div className="overflow-x-auto max-h-[500px] overflow-y-auto">
+            <table className="w-full text-left">
+              <thead className="sticky top-0 bg-slate-50 z-10">
+                <tr>
+                  <th className="p-6 text-[10px] font-black text-slate-400 uppercase">
+                    Student Name
+                  </th>
+                  <th className="p-6 text-[10px] font-black text-slate-400 uppercase text-center">
+                    Percentage
+                  </th>
+                  <th className="p-6 text-[10px] font-black text-slate-400 uppercase text-right">
+                    Grade
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-50">
+                {current.studentResults?.map((student, idx) => (
+                  <tr key={idx} className="hover:bg-slate-50 transition-colors">
+                    <td className="p-6 font-bold text-[#1e3a5a] uppercase text-sm">
+                      {student.studentName}
+                    </td>
+                    <td className="p-6 font-black text-[#ffc107] text-center text-xl">
+                      {student.percentage}%
+                    </td>
+                    <td className="p-6 text-right">
+                      <span className="px-3 py-1 bg-emerald-50 text-emerald-600 rounded-md font-black text-[10px] border border-emerald-100">
+                        {student.grade || '—'}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </motion.div>
       </div>
     </div>
   )

@@ -12,7 +12,7 @@ export const Home: GlobalConfig = {
       fields: [
         { name: 'title', type: 'text', required: true },
         { name: 'highlightWord', type: 'text' },
-        { name: 'image', type: 'upload', relationTo: 'media', }//required: true },
+        { name: 'image', type: 'upload', relationTo: 'media' }, //required: true },
       ],
     },
     {
@@ -23,7 +23,7 @@ export const Home: GlobalConfig = {
       fields: [
         { name: 'title', type: 'text', required: true },
         { name: 'description', type: 'textarea', required: true },
-        { name: 'image', type: 'upload', relationTo: 'media'}, // required: true },
+        { name: 'image', type: 'upload', relationTo: 'media' }, // required: true },
         { name: 'buttonText', type: 'text' },
       ],
     },
@@ -31,15 +31,16 @@ export const Home: GlobalConfig = {
       name: 'resultsHighlight',
       type: 'array',
       fields: [
-        { name: 'year', type: 'text' },
-        { name: 'title', type: 'text' },
+        { name: 'title', type: 'text', required: true },
         { name: 'image', type: 'upload', relationTo: 'media' },
         {
-          name: 'stats',
+          name: 'yearlyData', // Changed from 'stats' for better grouping
           type: 'array',
+          label: 'Results by Year',
           fields: [
-            { name: 'label', type: 'text' },
-            { name: 'value', type: 'text' },
+            { name: 'academicYear', type: 'text', required: true },
+            { name: 'schoolResult', type: 'text', required: true },
+            { name: 'boardResult', type: 'text', required: true },
           ],
         },
       ],
@@ -60,30 +61,26 @@ export const Home: GlobalConfig = {
         {
           name: 'primaryContact',
           type: 'group',
-          fields: [
-            { name: 'phone', type: 'text', required: true },
-          ],
+          fields: [{ name: 'phone', type: 'text', required: true }],
         },
         {
           name: 'locationInfo',
           type: 'group',
           fields: [
-            { 
-              name: 'mapEmbedUrl', 
-              type: 'text', 
+            {
+              name: 'mapEmbedUrl',
+              type: 'text',
               required: true,
               admin: {
-                description: 'Paste the "src" URL from the Google Maps iframe embed code.'
-              }
+                description: 'Paste the "src" URL from the Google Maps iframe embed code.',
+              },
             },
           ],
         },
         {
           name: 'responseTime',
           type: 'group',
-          fields: [
-            { name: 'admissionResponse', type: 'text', defaultValue: '24-48 Hours' },
-          ],
+          fields: [{ name: 'admissionResponse', type: 'text', defaultValue: '24-48 Hours' }],
         },
       ],
     },

@@ -9,23 +9,33 @@ export const revalidate = 60
 export default async function ResultsPage() {
   return (
     <main className="min-h-screen bg-background">
-      {/* This boundary ensures the page changes INSTANTLY to 
-          the /results URL while the database is queried. 
-      */}
+      {/* Page transitions instantly, data loads in background */}
       <Suspense fallback={<ResultsSkeleton />}>
         <ResultsDataFetcher />
       </Suspense>
     </main>
   )
 }
-
 async function ResultsDataFetcher() {
   const payload = await getPayload({ config })
-  
-  const data = await payload.findGlobal({
+
+  // 1. Fetch the Global for the page header/description
+  const pageConfig = await payload.findGlobal({
     slug: 'achievements-page',
   })
 
-  // Passing the resultsSection specifically to the UI
-  return <ResultsMainUI data={data.resultsSection} />
+  // 2. Fetch the actual Result documents from the Collection
+  const resultsDocs = await payload.find({
+    collection: 'results',
+    sort: '-year', // Optional: Show latest years first
+    limit: 100,
+  })
+
+  // Pass both the section config and the docs to the UI
+  return (
+    <ResultsMainUI 
+      header={pageConfig.resultsSection} 
+      results={resultsDocs.docs} 
+    />
+  )
 }

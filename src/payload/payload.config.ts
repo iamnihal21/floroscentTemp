@@ -20,6 +20,8 @@ import { CareerPage } from './globals/CareerPage'
 import { ScholarshipPage } from './globals/ScholarshipPage'
 import { Scholarships } from './collections/Scholarships'
 import { Inquiries } from './collections/Inquiries'
+import { Result } from 'postcss'
+import { Results } from './collections/Results'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -40,6 +42,7 @@ export default buildConfig({
     Jobs,
     Scholarships,
     Inquiries,
+    Results,
   ],
 
   globals: [

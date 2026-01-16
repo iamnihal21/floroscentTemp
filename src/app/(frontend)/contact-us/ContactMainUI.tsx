@@ -190,7 +190,7 @@ export default function ContactView({ data }: { data: ContactData }) {
       </section>
 
       {/* Dynamic Emergency Section - CENTERED LOGIC APPLIED HERE */}
-      <section className="py-16">
+      {/* <section className="py-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -201,7 +201,6 @@ export default function ContactView({ data }: { data: ContactData }) {
             <AlertTriangle className="w-8 h-8" /> Emergency Contacts
           </h2>
           
-          {/* Using flex-wrap and justify-center to handle 1, 2, or 3+ cards */}
           <div className="flex flex-wrap justify-center gap-6">
             {data.emergencyContacts?.map((contact, index) => (
               <motion.div 
@@ -218,7 +217,7 @@ export default function ContactView({ data }: { data: ContactData }) {
             ))}
           </div>
         </motion.div>
-      </section>
+      </section> */}
     </div>
   )
 }

@@ -74,6 +74,7 @@ export interface Config {
     jobs: Job;
     scholarships: Scholarship;
     inquiries: Inquiry;
+    results: Result;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -88,6 +89,7 @@ export interface Config {
     jobs: JobsSelect<false> | JobsSelect<true>;
     scholarships: ScholarshipsSelect<false> | ScholarshipsSelect<true>;
     inquiries: InquiriesSelect<false> | InquiriesSelect<true>;
+    results: ResultsSelect<false> | ResultsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -267,6 +269,30 @@ export interface Inquiry {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "results".
+ */
+export interface Result {
+  id: number;
+  year: string;
+  category: 'SSC' | 'HSC';
+  summaryStats?: {
+    schoolResult?: string | null;
+    boardResult?: string | null;
+  };
+  studentResults?:
+    | {
+        studentName: string;
+        percentage: string;
+        grade?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  image?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -316,6 +342,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'inquiries';
         value: number | Inquiry;
+      } | null)
+    | ({
+        relationTo: 'results';
+        value: number | Result;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -474,6 +504,31 @@ export interface InquiriesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "results_select".
+ */
+export interface ResultsSelect<T extends boolean = true> {
+  year?: T;
+  category?: T;
+  summaryStats?:
+    | T
+    | {
+        schoolResult?: T;
+        boardResult?: T;
+      };
+  studentResults?:
+    | T
+    | {
+        studentName?: T;
+        percentage?: T;
+        grade?: T;
+        id?: T;
+      };
+  image?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -537,13 +592,13 @@ export interface HomePage {
     | null;
   resultsHighlight?:
     | {
-        year?: string | null;
-        title?: string | null;
+        title: string;
         image?: (number | null) | Media;
-        stats?:
+        yearlyData?:
           | {
-              label?: string | null;
-              value?: string | null;
+              academicYear: string;
+              schoolResult: string;
+              boardResult: string;
               id?: string | null;
             }[]
           | null;
@@ -582,25 +637,71 @@ export interface AboutPage {
     title: string;
     description?: string | null;
   };
+  philosophy?: {
+    missionTitle?: string | null;
+    missionContent?: string | null;
+    visionTitle?: string | null;
+    visionContent?: string | null;
+    acronymValues?:
+      | {
+          letter?: string | null;
+          word?: string | null;
+          description?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  regulations?: {
+    norms?:
+      | {
+          item?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    rules?:
+      | {
+          item?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  houseSystem?: {
+    description?: string | null;
+    houses?:
+      | {
+          name?: string | null;
+          colorName?: string | null;
+          motto?: string | null;
+          /**
+           * e.g. #0000ff
+           */
+          hexColor?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
   leadership?:
     | {
         name: string;
         role: string;
         image?: (number | null) | Media;
-        /**
-         * Brief professional introduction/background of the leader
-         */
         introduction: string;
         message: string;
         gradient?:
           | ('from-amber-500 to-orange-500' | 'from-purple-500 to-pink-500' | 'from-blue-500 to-cyan-500')
           | null;
-        achievements?:
-          | {
-              item?: string | null;
-              id?: string | null;
-            }[]
-          | null;
+        id?: string | null;
+      }[]
+    | null;
+  team?:
+    | {
+        name: string;
+        designation: string;
+        /**
+         * e.g. Primary Teacher, Arts Dept
+         */
+        category?: string | null;
+        image?: (number | null) | Media;
         id?: string | null;
       }[]
     | null;
@@ -919,14 +1020,14 @@ export interface HomePageSelect<T extends boolean = true> {
   resultsHighlight?:
     | T
     | {
-        year?: T;
         title?: T;
         image?: T;
-        stats?:
+        yearlyData?:
           | T
           | {
-              label?: T;
-              value?: T;
+              academicYear?: T;
+              schoolResult?: T;
+              boardResult?: T;
               id?: T;
             };
         id?: T;
@@ -972,6 +1073,52 @@ export interface AboutPageSelect<T extends boolean = true> {
         title?: T;
         description?: T;
       };
+  philosophy?:
+    | T
+    | {
+        missionTitle?: T;
+        missionContent?: T;
+        visionTitle?: T;
+        visionContent?: T;
+        acronymValues?:
+          | T
+          | {
+              letter?: T;
+              word?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  regulations?:
+    | T
+    | {
+        norms?:
+          | T
+          | {
+              item?: T;
+              id?: T;
+            };
+        rules?:
+          | T
+          | {
+              item?: T;
+              id?: T;
+            };
+      };
+  houseSystem?:
+    | T
+    | {
+        description?: T;
+        houses?:
+          | T
+          | {
+              name?: T;
+              colorName?: T;
+              motto?: T;
+              hexColor?: T;
+              id?: T;
+            };
+      };
   leadership?:
     | T
     | {
@@ -981,12 +1128,15 @@ export interface AboutPageSelect<T extends boolean = true> {
         introduction?: T;
         message?: T;
         gradient?: T;
-        achievements?:
-          | T
-          | {
-              item?: T;
-              id?: T;
-            };
+        id?: T;
+      };
+  team?:
+    | T
+    | {
+        name?: T;
+        designation?: T;
+        category?: T;
+        image?: T;
         id?: T;
       };
   establishedYear?: T;

@@ -4,14 +4,23 @@ import config from '@/payload/payload.config'
 import AboutUI from './AboutUI'
 import AboutSkeleton from './AboutSkeleton'
 
+/**
+ * Prevents Next.js from trying to fully prerender this page at build time.
+ * REQUIRED when using Payload + DB.
+ */
+export const dynamic = 'force-dynamic'
+
+/**
+ * ISR revalidation (safe for globals)
+ */
 export const revalidate = 60
 
 export default function AboutPage() {
   return (
     <main className="min-h-screen bg-background">
-      {/* This is the magic fix. Suspense tells Next.js:
-        "Switch to the /about URL immediately and show the Skeleton 
-        while DataFetcher is busy talking to the database."
+      {/* 
+        Suspense allows instant route navigation.
+        Skeleton shows immediately while Payload fetch runs.
       */}
       <Suspense fallback={<AboutSkeleton />}>
         <AboutDataFetcher />
@@ -22,8 +31,18 @@ export default function AboutPage() {
 
 async function AboutDataFetcher() {
   const payload = await getPayload({ config })
-  const data = await payload.findGlobal({ slug: 'about-page' })
 
-  // Once the data is fetched, it replaces the Skeleton with the actual UI
+  const data = await payload.findGlobal({
+    slug: 'about-page',
+  })
+
+  /**
+   * Safety guard:
+   * Prevents UI crash if global was never saved in Admin
+   */
+  if (!data) {
+    return <AboutSkeleton />
+  }
+
   return <AboutUI data={data} />
 }

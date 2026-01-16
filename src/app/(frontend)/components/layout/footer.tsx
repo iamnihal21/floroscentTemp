@@ -46,7 +46,7 @@ export function Footer() {
               <div className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-primary" />
                 <a
-                  href="mailto:admissions@hw.com"
+                  href="mailto:info@florescentpublicschool.org"
                   className="text-gray-400 hover:text-primary transition-colors"
                 >
                   info@florescentpublicschool.org
@@ -103,7 +103,7 @@ export function Footer() {
           >
             <h3 className="text-xl font-bold mb-4">Connect With Us</h3>
             <div className="flex gap-4">
-              {[Facebook, Twitter, Instagram, Linkedin, Youtube].map((Icon, i) => (
+              {[Facebook, Instagram].map((Icon, i) => (
                 <motion.a
                   key={i}
                   variants={fadeUp}
@@ -136,7 +136,8 @@ export function Footer() {
         <div className="container mx-auto px-4 py-6">
           <p className="text-center black text-sm text-gray-300">
             © {new Date().getFullYear()} Floroscent Public School. All rights reserved.
-          </p>
+          </p> 
+          
         </div>
       </motion.div>
     </footer>
