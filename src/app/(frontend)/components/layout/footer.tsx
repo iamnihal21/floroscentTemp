@@ -103,7 +103,7 @@ export function Footer() {
           >
             <h3 className="text-xl font-bold mb-4">Connect With Us</h3>
             <div className="flex gap-4">
-              {[Facebook, Instagram].map((Icon, i) => (
+              {[Facebook, Twitter, Instagram, Linkedin, Youtube].map((Icon, i) => (
                 <motion.a
                   key={i}
                   variants={fadeUp}
@@ -137,7 +137,6 @@ export function Footer() {
           <p className="text-center black text-sm text-gray-300">
             © {new Date().getFullYear()} Floroscent Public School. All rights reserved.
           </p> 
-          
         </div>
       </motion.div>
     </footer>
