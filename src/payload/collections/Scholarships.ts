@@ -36,7 +36,6 @@ export const Scholarships: CollectionConfig = {
       name: 'reward',
       type: 'text',
       label: 'Reward (e.g. ₹5,000 or Medal)',
-      required: true,
     },
     {
       name: 'criteria',

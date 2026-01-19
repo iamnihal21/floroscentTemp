@@ -27,7 +27,7 @@ export default function ScholarshipView({
             <h1 className="text-4xl md:text-6xl font-bold mb-6 text-foreground">
               {data.hero?.title}
             </h1>
-            <p className="text-lg md:text-xl text-secondary leading-relaxed mb-8">
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
               {data.hero?.description}
             </p>
           </motion.div>
@@ -88,7 +88,7 @@ export default function ScholarshipView({
             whileInView={{ opacity: 1 }}
             className="bg-muted/30 border border-border rounded-3xl p-8 md:p-12 mb-10"
           >
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 mb-6">
               <LucideIcons.ShieldCheck className="w-8 h-8 text-primary" />
               <h2 className="text-3xl font-bold text-foreground">Terms & Conditions</h2>
             </div>
@@ -104,8 +104,7 @@ export default function ScholarshipView({
             </div>
             <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-6">
               <p className="text-sm text-muted-foreground italic">
-                Scholarships are awarded during the annual &quot;Prize Distribution Program&quot;
-                (Feb-Mar).
+                These scholarships will be awarded based on the {new Date().getFullYear()} academic results, subject to the rules and regulations set for the scheme.
               </p>
             </div>
           </motion.div>

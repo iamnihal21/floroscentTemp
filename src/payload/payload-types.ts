@@ -246,7 +246,7 @@ export interface Scholarship {
   title: string;
   category: 'rank' | 'percentage' | 'board';
   standards: string;
-  reward: string;
+  reward?: string | null;
   criteria?: string | null;
   iconName?: string | null;
   updatedAt: string;
@@ -977,15 +977,6 @@ export interface ScholarshipPage {
     title?: string | null;
     description?: string | null;
   };
-  scholarships?:
-    | {
-        standardRange?: string | null;
-        criteria?: string | null;
-        reward?: string | null;
-        iconName?: string | null;
-        id?: string | null;
-      }[]
-    | null;
   conditions?:
     | {
         rule?: string | null;
@@ -1434,15 +1425,6 @@ export interface ScholarshipPageSelect<T extends boolean = true> {
     | {
         title?: T;
         description?: T;
-      };
-  scholarships?:
-    | T
-    | {
-        standardRange?: T;
-        criteria?: T;
-        reward?: T;
-        iconName?: T;
-        id?: T;
       };
   conditions?:
     | T

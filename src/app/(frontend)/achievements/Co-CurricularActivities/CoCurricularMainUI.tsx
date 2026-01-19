@@ -23,6 +23,7 @@ export default function CoCurricularView({ data }: { data: CoCurricularData }) {
   }
 
   const prevEvent = () => {
+      
     setSelectedEvent((prev) => (prev - 1 + events.length) % events.length)
     setSelectedImageIndex(0)
   }
