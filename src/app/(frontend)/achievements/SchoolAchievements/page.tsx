@@ -1,31 +1,41 @@
 import { Suspense } from 'react'
 import { getPayload } from 'payload'
 import config from '@/payload/payload.config'
-import SchoolMainUI from './SchoolMainUI'
-import SchoolSkeleton from './SchoolSkeleton'
+import ResultsMainUI from './SchoolMainUI'
+import ResultsSkeleton from './SchoolSkeleton'
 
 export const revalidate = 60
 
-export default async function SchoolAchievementsPage() {
+export default async function ResultsPage() {
   return (
     <main className="min-h-screen bg-background">
-      {/* Suspense allows Next.js to swap the URL and show the UI Shell (Skeleton)
-          immediately while the DataFetcher waits for the CMS response.
-      */}
-      <Suspense fallback={<SchoolSkeleton />}>
-        <SchoolDataFetcher />
+      {/* Page transitions instantly, data loads in background */}
+      <Suspense fallback={<ResultsSkeleton />}>
+        <ResultsDataFetcher />
       </Suspense>
     </main>
   )
 }
-
-async function SchoolDataFetcher() {
+async function ResultsDataFetcher() {
   const payload = await getPayload({ config })
-  
-  const data = await payload.findGlobal({
+
+  // 1. Fetch the Global for the page header/description
+  const pageConfig = await payload.findGlobal({
     slug: 'achievements-page',
   })
 
-  // We pass only the specific section needed to the Client UI
-  return <SchoolMainUI data={data.schoolAchievements} />
+  // 2. Fetch the actual Result documents from the Collection
+  const resultsDocs = await payload.find({
+    collection: 'results',
+    sort: '-year', // Optional: Show latest years first
+    limit: 100,
+  })
+
+  // Pass both the section config and the docs to the UI
+  return (
+    <ResultsMainUI 
+      header={pageConfig.resultsSection} 
+      results={resultsDocs.docs} 
+    />
+  )
 }
