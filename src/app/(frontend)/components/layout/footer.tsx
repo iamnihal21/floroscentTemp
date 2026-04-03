@@ -103,7 +103,7 @@ export function Footer() {
           >
             <h3 className="text-xl font-bold mb-4">Connect With Us</h3>
             <div className="flex gap-4">
-              {[Facebook, Twitter, Instagram, Linkedin, Youtube].map((Icon, i) => (
+              {[Instagram].map((Icon, i) => (
                 <motion.a
                   key={i}
                   variants={fadeUp}
@@ -111,7 +111,7 @@ export function Footer() {
                   whileInView="show"
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.15 }}
-                  href="#"
+                  href="https://www.instagram.com/florescent_public_school?igsh=MXBhaTZhdngwN3YzZg=="
                   className="w-10 h-10 rounded-full bg-gray-800 hover:bg-primary flex items-center justify-center transition-colors"
                 >
                   <Icon className="w-5 h-5" />
